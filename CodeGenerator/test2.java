@@ -35,7 +35,7 @@ assertTrue(Math.abs(totalDeposit - 64.85) < 1e-10);
 public void test_4() {
 calendar.set(2018, 10, 1);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 0.5, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 0.5, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.DOMESTIC);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -123,7 +123,7 @@ assertTrue(Math.abs(totalDeposit - 16.03) < 1e-10);
 public void test_12() {
 calendar.set(2018, 9, 30);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 1, false));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 1, false));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.DOMESTIC_EXPEDITED);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -211,7 +211,7 @@ assertTrue(Math.abs(totalDeposit - 40.67) < 1e-10);
 public void test_20() {
 calendar.set(2018, 1, 15);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 6.67, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 6.67, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL_EXPEDITED);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -299,7 +299,7 @@ assertTrue(Math.abs(totalDeposit - 44) < 1e-10);
 public void test_28() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 10, false));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 10, false));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.DOMESTIC);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -387,7 +387,7 @@ assertTrue(Math.abs(totalDeposit - 16.35) < 1e-10);
 public void test_36() {
 calendar.set(2018, 1, 16);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 12.5, false));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 12.5, false));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -475,7 +475,7 @@ assertTrue(Math.abs(totalDeposit - 17.1136) < 1e-10);
 public void test_44() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 13.33, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 13.33, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -563,7 +563,7 @@ assertTrue(Math.abs(totalDeposit - 39.84) < 1e-10);
 public void test_52() {
 calendar.set(2018, 3, 30);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 25, false));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 25, false));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -651,7 +651,7 @@ assertTrue(Math.abs(totalDeposit - 43.44) < 1e-10);
 public void test_60() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 49, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 49, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -739,7 +739,7 @@ assertTrue(Math.abs(totalDeposit - 182.36) < 1e-10);
 public void test_68() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 200, false));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 200, false));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -827,7 +827,7 @@ assertTrue(Math.abs(totalDeposit - 458.36) < 1e-10);
 public void test_76() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 500, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 500, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -915,7 +915,7 @@ assertTrue(Math.abs(totalDeposit - 734.36) < 1e-10);
 public void test_84() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 800, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 800, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
@@ -1003,7 +1003,7 @@ assertTrue(Math.abs(totalDeposit - 735.28) < 1e-10);
 public void test_92() {
 calendar.set(2018, 1, 17);
 Order order = new Order();
-order.addOrderItem(new OrderItem(ProductType., 1, 801, true));
+order.addOrderItem(new OrderItem(ProductType.FURNITUREDECOR, 1, 801, true));
 order.setDate(calendar.getTime());
 order.setShipment(ShipmentType.INTERNATIONAL);
 double totalDeposit = new TotalDeposit(order).getTotalDeposit();
