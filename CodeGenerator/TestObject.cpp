@@ -74,10 +74,20 @@ TestObject::TestObject(string input)
 	//day
 	date_dot = temp_buff.find('.', date_begin);
 	dd = temp_buff.substr(date_begin, date_dot - date_begin);
+	if (dd[0] == '0')
+	{
+		char temp = dd[1];
+		dd = temp;
+	}
 	//month
 	date_begin = date_dot + 1;
 	date_dot = temp_buff.find('.', date_begin);
 	mm = temp_buff.substr(date_begin, date_dot - date_begin);
+	if (mm[0] == '0')
+	{
+		char temp = mm[1];
+		mm = temp;
+	}
 	//year
 	date_begin = date_dot + 1;
 	date_dot = temp_buff.find('.', date_begin);

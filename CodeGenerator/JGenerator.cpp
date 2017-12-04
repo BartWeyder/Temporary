@@ -6,7 +6,7 @@
 
 JGenerator::JGenerator(list<TestObject> tests)
 {
-	string file_name = "test.java";
+	string file_name = "test3.java";
 	ofstream code_file(file_name);
 	for (auto& test : tests)
 	{
