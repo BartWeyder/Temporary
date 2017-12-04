@@ -12,9 +12,11 @@ JGenerator::JGenerator(list<TestObject> tests)
 	{
 		code_file << "@Test" << endl;
 		code_file << "public void test_" << test.test_number << "() {" << endl;
-		code_file << "calendar.set(" << test.yy << ", " << test.mm << ", " << test.yy << ");" << endl;
+		code_file << "calendar.set(" << test.yy << ", " << test.mm << ", " << test.dd << ");" << endl;
 		code_file << "Order order = new Order();" << endl;
 		code_file << "order.addOrderItem(new OrderItem(ProductType." << test.product_type << ", 1, " << test.price << ", " << test.gift_wrap << "));" << endl;
+		code_file << "order.setDate(calendar.getTime());" << endl;
+		code_file << "order.setShipment(ShipmentType." << test.shipping << ");" << endl;
 		code_file << "double totalDeposit = new TotalDeposit(order).getTotalDeposit();" << endl;
 		//additioanal line
 		code_file << "System.out.println(totalDeposit);" << endl;
