@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CodeGenerator", "CodeGenerator\CodeGenerator.vcxproj", "{DB793832-C79C-48E8-BAB1-BC17EA5A803B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Debug|x64.ActiveCfg = Debug|x64
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Debug|x64.Build.0 = Debug|x64
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Debug|x86.Build.0 = Debug|Win32
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Release|x64.ActiveCfg = Release|x64
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Release|x64.Build.0 = Release|x64
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Release|x86.ActiveCfg = Release|Win32
+		{DB793832-C79C-48E8-BAB1-BC17EA5A803B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B2256C0-7EAF-48AD-96B5-BC13F4947B28}
+	EndGlobalSection
+EndGlobal
