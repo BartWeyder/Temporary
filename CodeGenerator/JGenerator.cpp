@@ -6,13 +6,13 @@
 
 JGenerator::JGenerator(list<TestObject> tests)
 {
-	string file_name = "test3.java";
+	string file_name = "test2.java";
 	ofstream code_file(file_name);
 	for (auto& test : tests)
 	{
 		code_file << "@Test" << endl;
 		code_file << "public void test_" << test.test_number << "() {" << endl;
-		code_file << "calendar.set(" << test.yy << ", " << test.mm << ", " << test.dd << ");" << endl;
+		code_file << "calendar.set(" << test.yy << ", " << (stoi(test.mm) - 1) << ", " << test.dd << ");" << endl;
 		code_file << "Order order = new Order();" << endl;
 		code_file << "order.addOrderItem(new OrderItem(ProductType." << test.product_type << ", 1, " << test.price << ", " << test.gift_wrap << "));" << endl;
 		code_file << "order.setDate(calendar.getTime());" << endl;
