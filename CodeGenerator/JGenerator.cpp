@@ -6,7 +6,7 @@
 
 JGenerator::JGenerator(list<TestObject> tests)
 {
-	string file_name = "test3.java";
+	string file_name = "test2.java";
 	ofstream code_file(file_name);
 	for (auto& test : tests)
 	{
@@ -20,7 +20,7 @@ JGenerator::JGenerator(list<TestObject> tests)
 		code_file << "double totalDeposit = new TotalDeposit(order).getTotalDeposit();" << endl;
 		//additioanal line
 		code_file << "System.out.println(totalDeposit);" << endl;
-		code_file << "assertTrue(Math.abs(totalDeposit - " << test.total_deposit << ") < 1e-10);" << endl;
+		code_file << "assertTrue(Math.abs(totalDeposit - " << test.total_deposit << ") < 1e-2);" << endl;
 		code_file << "}" << endl;
 	}
 	code_file.close();
