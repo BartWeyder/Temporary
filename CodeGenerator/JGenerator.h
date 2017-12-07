@@ -2,10 +2,10 @@
 #include "TestObject.h"
 #include <list>
 
-class JGenerator
+class j_generator
 {
 public:
-	JGenerator(list<TestObject> tests);
-	~JGenerator();
+	j_generator(list<test_object> tests);
+	~j_generator();
 };
 

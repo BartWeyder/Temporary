@@ -2,7 +2,7 @@
 #include "TestObject.h"
 #include <string>
 
-TestObject::TestObject(string input)
+test_object::test_object(string input)
 {
 	string temp_buff;
 	size_t begin_pos = 0;
@@ -99,7 +99,7 @@ TestObject::TestObject(string input)
 	total_deposit = input.substr(begin_pos, coma_pos - begin_pos);
 }
 
-TestObject::~TestObject()
+test_object::~test_object()
 {
 }
 

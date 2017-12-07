@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-CsvReader::CsvReader(string file_name)
+csv_reader::csv_reader(string file_name)
 {
 
 	string buff;
@@ -16,11 +16,11 @@ CsvReader::CsvReader(string file_name)
 	for (size_t i = 0; i < 97; i++)//560; i++)
 	{
 		getline(test_file, buff);
-		tests.push_back(TestObject(buff));
+		tests.push_back(test_object(buff));
 	}
 	test_file.close();
 }
 
-CsvReader::~CsvReader()
+csv_reader::~csv_reader()
 {
 }

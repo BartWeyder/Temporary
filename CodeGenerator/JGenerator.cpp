@@ -4,7 +4,7 @@
 #include <fstream> 
 #include <string>
 
-JGenerator::JGenerator(list<TestObject> tests)
+j_generator::j_generator(list<test_object> tests)
 {
 	string file_name = "test2.java";
 	ofstream code_file(file_name);
@@ -26,6 +26,6 @@ JGenerator::JGenerator(list<TestObject> tests)
 	code_file.close();
 }
 
-JGenerator::~JGenerator()
+j_generator::~j_generator()
 {
 }

@@ -3,11 +3,11 @@
 
 using namespace std;
 
-class TestObject
+class test_object
 {
 public:
-	TestObject(string input);
-	~TestObject();
+	explicit test_object(string input);
+	~test_object();
 	string test_number;
 	string shipping;
 	string gift_wrap;

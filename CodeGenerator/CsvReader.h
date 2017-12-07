@@ -5,11 +5,11 @@
 
 using namespace std;
 
-class CsvReader
+class csv_reader
 {
 public:
-	CsvReader(string file_name);
-	~CsvReader();
-	list<TestObject> tests;
+	explicit csv_reader(string file_name);
+	~csv_reader();
+	list<test_object> tests;
 };
 
