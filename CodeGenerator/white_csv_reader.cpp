@@ -17,7 +17,7 @@ white_csv_reader::white_csv_reader(const std::string csv_file)
 	auto new_order = new test_order("1");
 	new_order->test_object_list.push_back(test_object_extended(buff));
 
-	for (size_t i = 1; i < 34; i++)//560; i++)
+	for (size_t i = 1; i < 28; i++)//560; i++)
 	{
 		getline(test_file, buff);
 		if (isdigit(buff[0])) {

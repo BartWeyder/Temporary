@@ -10,6 +10,6 @@ public:
 	~test_order();
 	std::string number;
 	std::list<test_object_extended> test_object_list;
-	int total_price = 0;
+	double total_price = 0.0;
 };
 

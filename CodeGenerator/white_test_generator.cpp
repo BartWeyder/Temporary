@@ -17,14 +17,14 @@ white_test_generator::white_test_generator(std::list<test_order> orders)
 			<< order.test_object_list.back().dd << ");" << endl;
 		code_file << "Order order = new Order();" << endl;
 		if (order.test_object_list.back().shipping == "999")
-			code_file << "order.setShipment(" << order.test_object_list.back().shipping << ");" << endl;
+			code_file << "order.setShipment(null);" << endl;
 		else
 			code_file << "order.setShipment(ShipmentType." << order.test_object_list.back().shipping << ");" << endl;
 		for (auto& object : order.test_object_list)
 		{
-			order.total_price += stoi(object.total_deposit);
+			order.total_price += stod(object.total_deposit);
 			if (object.product_type == "999")
-				code_file << "order.addOrderItem(new OrderItem(" << object.product_type << ", "
+				code_file << "order.addOrderItem(new OrderItem(null, "
 					<< object.quantity << ", " << object.price << ", " << object.gift_wrap << "));" << endl;
 			else 
 				code_file << "order.addOrderItem(new OrderItem(ProductType." << object.product_type << ", "
