@@ -30,6 +30,18 @@
     <ClInclude Include="JGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="test_order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test_object_extended.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="white_csv_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="white_test_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -45,6 +57,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_object_extended.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="white_csv_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="white_test_generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
