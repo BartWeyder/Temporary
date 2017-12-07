@@ -12,7 +12,7 @@ white_test_generator::white_test_generator(std::list<test_order> orders)
 	{
 		code_file << "@Test" << endl;
 		code_file << "public void test_" << order.number << "() {" << endl;
-		code_file << "calendar.set(" << order.test_object_list.back().yy << ", " 
+		code_file << "calendar.set(20" << order.test_object_list.back().yy << ", " 
 			<< (stoi(order.test_object_list.back().mm) - 1) << ", " 
 			<< order.test_object_list.back().dd << ");" << endl;
 		code_file << "Order order = new Order();" << endl;
@@ -29,9 +29,8 @@ white_test_generator::white_test_generator(std::list<test_order> orders)
 			else 
 				code_file << "order.addOrderItem(new OrderItem(ProductType." << object.product_type << ", "
 					<< object.quantity << ", " << object.price << ", " << object.gift_wrap << "));" << endl;
-			code_file << "order.setDate(calendar.getTime());" << endl;
-
 		}
+		code_file << "order.setDate(calendar.getTime());" << endl;
 		code_file << "double totalDeposit = new TotalDeposit(order).getTotalDeposit();" << endl;
 		//additioanal line
 		code_file << "System.out.println(totalDeposit);" << endl;
