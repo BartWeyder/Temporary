@@ -41,6 +41,9 @@ FORMS    += mainwindow.ui
 INCLUDEPATH += include
 
 LIBS += \
+    #-LD:\git\armadillo-9.100.5\examples\lib_win64 \
+    #-lblas_win64_MT \
+    #-llapack_win64_MT
     -LD:\git\Qt\TestArmadillo\lib \
     -llibblas \
     -lliblapack
