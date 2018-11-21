@@ -1,2 +1,2 @@
-# Temporary
-This is small project for generating unit tests for QATestProject from csv file.
+# CPP-practice
+Repository to keep all study or temporary projects, written on c++.
