@@ -1,5 +1,6 @@
 #include  "pch.h"
 #include "nonlinear_optimization.hpp"
+#include <iostream>
 
 template<class T>
 struct Greater
@@ -48,8 +49,6 @@ std::valarray<double> nelder_mead(std::function<double(std::valarray<double>)> f
 			tmp[j] = std::pow(polyhedron_peaks[j] - xc, 2.0).sum();
 		if (tmp.sum() < params.dm * params.dm * tmp.size())
 			break;
-			
-		
 
 		auto r = std::make_pair(
 			(1 + params.alpha) * xc - params.alpha * (*highest.first),
@@ -57,8 +56,6 @@ std::valarray<double> nelder_mead(std::function<double(std::valarray<double>)> f
 		);
 		// decrementing function calculations: for highest, middle, lowest and r
 		params.kod[3] -= 4;
-
-		// TODO: compare results part
 
 		if (r.second < lowest.second)
 		{
@@ -106,7 +103,7 @@ std::valarray<double> nelder_mead(std::function<double(std::valarray<double>)> f
 			highest.second = s.second;
 			continue;
 		}
-		if (s.second > highest.second)
+		if (s.second >= highest.second)
 			for (auto i = polyhedron_peaks.begin(); i != polyhedron_peaks.end() - 1; ++i)
 			{
 				*i = *lowest.first + (*i - *lowest.first) / 2.0;
@@ -114,6 +111,8 @@ std::valarray<double> nelder_mead(std::function<double(std::valarray<double>)> f
 	}
 
 	std::sort(polyhedron_peaks.begin(), polyhedron_peaks.end(), cmp);
+	std::cout << "Function calls left: " << params.kod[3] << std::endl << "Iterations left: " <<
+		params.kod[4] << std::endl;
 	return *polyhedron_peaks.rbegin();
 }
 
