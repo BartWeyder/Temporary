@@ -151,11 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="app.h" />
     <ClInclude Include="NelderMeadParams.h" />
     <ClInclude Include="nonlinear_optimization.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="app.cpp" />
     <ClCompile Include="NelderMeadOptimization.cpp" />
     <ClCompile Include="NelderMeadParams.cpp" />
     <ClCompile Include="nonlinear_optimization.cpp" />

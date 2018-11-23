@@ -262,3 +262,10 @@ __pycache__/
 
 #SOLE_LUD
 SoLE_LUDecomposition/include
+
+#qt builds
+build-SoLE_LUDecomposition-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/
+build-SoLE_LUDecomposition-Unnamed-Debug/
+build-TransporationQT-Desktop_Qt_5_12_0_MSVC2017_64bit-Debug/
+packages/
+x64/
