@@ -27,11 +27,15 @@ CONFIG += c++14
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    costs.cpp
+    costs.cpp \
+    needs.cpp \
+    production.cpp
 
 HEADERS += \
         mainwindow.h \
-    costs.h
+    costs.h \
+    needs.h \
+    production.h
 
 FORMS += \
         mainwindow.ui

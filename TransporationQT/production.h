@@ -1,15 +1,15 @@
-#ifndef COSTS_H
-#define COSTS_H
+#ifndef PRODUCTION_H
+#define PRODUCTION_H
 
 #include <QAbstractTableModel>
 #include <vector>
 
-class Costs : public QAbstractTableModel
+class Production : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit Costs(QObject *parent = nullptr);
+    explicit Production(QObject *parent = nullptr);
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -25,19 +25,15 @@ public:
 
     // Add data:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 
     // Remove data:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 
-    void setRows(const int &size);
-    void setCols(const int &size);
+    void setSize(const int & size);
 
-    const std::vector<std::vector<double>>& costs() { return costs_; }
-
+    const std::vector<double>& production() { return prod; }
 private:
-    std::vector<std::vector<double>> costs_;
+    std::vector<double> prod;
 };
 
-#endif // COSTS_H
+#endif // PRODUCTION_H

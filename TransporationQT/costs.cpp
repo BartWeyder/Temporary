@@ -8,25 +8,25 @@ Costs::Costs(QObject *parent)
     constexpr size_t ROWS = 4;
     std::vector<double> tmp(COLS);
     for(size_t i = 0; i < ROWS; ++i)
-        costs.push_back(tmp);
+        costs_.push_back(tmp);
 }
 
 int Costs::rowCount(const QModelIndex &parent) const
 {
-    return costs.size();
+    return costs_.size();
 }
 
 int Costs::columnCount(const QModelIndex &parent) const
 {
     if (rowCount() > 0)
-        return costs.begin()->size();
+        return costs_.begin()->size();
     return 0;
 }
 
 QVariant Costs::data(const QModelIndex &index, int role) const
 {
     if(role == Qt::DisplayRole)
-        return costs[index.row()][index.column()];
+        return costs_[index.row()][index.column()];
     return QVariant();
 }
 
@@ -36,8 +36,7 @@ bool Costs::setData(const QModelIndex &index, const QVariant &value, int role)
     double convertedValue = value.toDouble(ok);
     if (role == Qt::EditRole && *ok && data(index, role) != convertedValue)
     {
-        costs[index.row()][index.column()] = convertedValue;
-        //emit dataChanged(index, index, QVector<int>() << role);
+        costs_[index.row()][index.column()] = convertedValue;
         return true;
     }
     std::cout << '\a';
@@ -54,7 +53,7 @@ bool Costs::insertRows(int row, int count, const QModelIndex &parent)
     beginInsertRows(parent, row, row + count - 1);
     std::vector<double> tmp(columnCount());
     for(auto i = 0; i < count; ++i)
-        costs.push_back(tmp);
+        costs_.push_back(tmp);
     endInsertRows();
     return true;
 }
@@ -62,7 +61,7 @@ bool Costs::insertRows(int row, int count, const QModelIndex &parent)
 bool Costs::insertColumns(int column, int count, const QModelIndex &parent)
 {
     beginInsertColumns(parent, column, column + count - 1);
-    for(auto &i : costs)
+    for(auto &i : costs_)
         i.resize(columnCount() + count);
     endInsertColumns();
     return true;
@@ -72,7 +71,7 @@ bool Costs::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     for(auto i = 0; i < count; ++i)
-        costs.pop_back();
+        costs_.pop_back();
     endRemoveRows();
     return true;
 }
@@ -80,8 +79,27 @@ bool Costs::removeRows(int row, int count, const QModelIndex &parent)
 bool Costs::removeColumns(int column, int count, const QModelIndex &parent)
 {
     beginRemoveColumns(parent, column, column + count - 1);
-    for(auto &i : costs)
+    for(auto &i : costs_)
         i.resize(columnCount() - count);
     endRemoveColumns();
     return true;
+}
+
+void Costs::setRows(const int &size)
+{
+    int difference = rowCount() - size;
+    if(difference < 0)
+        insertRows(rowCount() - 1, abs(difference));
+    else
+        removeRows(rowCount() - 1 - difference, difference);
+}
+
+void Costs::setCols(const int &size)
+{
+    int difference = columnCount() - size;
+    if(difference < 0)
+        insertColumns(columnCount() - 1, abs(difference));
+    else
+        removeColumns(columnCount() - 1 - difference, difference);
+
 }
