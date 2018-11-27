@@ -2,7 +2,7 @@
 #include "TransportationProblem.h"
 #include <algorithm>
 
-auto TransportationProblem::northWest(ValVec needs, ValVec production)
+TransportationProblem::Mat TransportationProblem::northWest(ValVec needs, ValVec production)
 {
 	if (needs.sum() != production.sum()) throw std::logic_error("Not balanced");
 
@@ -51,7 +51,7 @@ auto TransportationProblem::northWest(ValVec needs, ValVec production)
 	return result;
 }
 
-auto TransportationProblem::potentialMethod(const Mat & costs, Vec needs, Vec production)
+TransportationProblem::Mat TransportationProblem::potentialMethod(const Mat & costs, Vec needs, Vec production)
 {
 	// get raw plan
 	auto result = northWest(ValVec(needs.data(), needs.size()), ValVec(production.data(), production.size()));
@@ -152,101 +152,96 @@ bool TransportationProblem::lookVertical(std::list<std::pair<int, int>>& l, cons
 {
 	const auto el = *(l.rbegin());
 	auto copy = l;
-	std::list<std::pair<int, int>> optional;
-	auto optional_status = false, main_status = false;
 
+	if (el.second == l.begin()->second && el != *l.begin()) return true;
+
+	auto index = el.first - 1;
+	while (index >= 0)
+	{
+		if(basisChecker(plan[index][el.second]))
+		{
+			const auto next = std::find(l.begin(), l.end(), std::make_pair(index, el.second));
+			if (next == l.end())
+			{
+				copy.push_back(std::make_pair(index, el.second));
+				if(lookHorizontal(copy, plan))
+				{
+					std::swap(l, copy);
+					return true;
+				}
+			}
+		}
+		--index;
+	}
 	
-	
-	if (el.first > 0 && basisChecker(plan[el.first - 1][el.second]))
+	copy = l;
+	index = el.first + 1;
+	while (index < plan.size())
 	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first - 1, el.second));
-		if (next == l.begin()) return true;
-		if(next == l.end())
+		if (basisChecker(plan[index][el.second]))
 		{
-			copy.push_back(std::make_pair(el.first - 1, el.second));
-			main_status = lookHorizontal(copy, plan);
+			const auto next = std::find(l.begin(), l.end(), std::make_pair(index, el.second));
+			if (next == l.end())
+			{
+				copy.push_back(std::make_pair(index, el.second));
+				if (lookHorizontal(copy, plan))
+				{
+					std::swap(l, copy);
+					return true;
+				}
+			}
 		}
+		++index;
 	}
-	if (main_status == true && el.first < plan.size() - 1 &&
-		basisChecker(plan[el.first + 1][el.second]))
-	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first + 1, el.second));
-		if (next == l.begin()) return true;
-		if (next == l.end())
-		{
-			optional = l;
-			optional.push_back(std::make_pair(el.first + 1, el.second));
-			optional_status = lookHorizontal(optional, plan);
-		}
-	} else if (main_status == false && el.first < plan.size() - 1 &&
-		basisChecker(plan[el.first + 1][el.second]))
-	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first + 1, el.second));
-		if (next == l.begin()) return true;
-		if (next == l.end())
-		{
-			copy.push_back(std::make_pair(el.first + 1, el.second));
-			main_status = lookHorizontal(copy, plan);
-		}
-	}
-	if(main_status && optional_status)
-	{
-		if (l.size() < optional.size()) 
-			std::swap(l, optional);
-	}
-	if (main_status) std::swap(l, copy);
-	return main_status;
+	return false;
 }
 
 bool TransportationProblem::lookHorizontal(std::list<std::pair<int, int>>& l, const Mat& plan)
 {
 	const auto el = *(l.rbegin());
 	auto copy = l;
-	std::list<std::pair<int, int>> optional;
-	auto optional_status = false, main_status = false;
 
+	if (el.first == l.begin()->first && el != *l.begin()) return true;
 
+	auto index = el.second - 1;
+	while (index >= 0)
+	{
+		if (basisChecker(plan[el.first][index]))
+		{
+			const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first, index));
+			if (next == l.end())
+			{
+				copy.push_back(std::make_pair(el.first, index));
+				if (lookVertical(copy, plan))
+				{
+					std::swap(l, copy);
+					return true;
+				}
+			}
+		}
+		--index;
+	}
 
-	if (el.second > 0 && basisChecker(plan[el.first][el.second - 1]))
+	copy = l;
+	index = el.first + 1;
+	while (index < plan.begin()->size())
 	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first, el.second - 1));
-		if (next == l.begin()) return true;
-		if (next == l.end())
+		if (basisChecker(plan[el.first][index]))
 		{
-			copy.push_back(std::make_pair(el.first, el.second - 1));
-			main_status = lookVertical(copy, plan);
+			const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first, index));
+			if (next == l.end())
+			{
+				copy.push_back(std::make_pair(el.first, index));
+				if (lookVertical(copy, plan))
+				{
+					std::swap(l, copy);
+					return true;
+				}
+			}
 		}
+		++index;
 	}
-	if (main_status == true && el.second < plan.begin()->size() - 1 &&
-		basisChecker(plan[el.first][el.second + 1]))
-	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first, el.second + 1));
-		if (next == l.begin()) return true;
-		if (next == l.end())
-		{
-			optional = l;
-			optional.push_back(std::make_pair(el.first, el.second + 1));
-			optional_status = lookVertical(optional, plan);
-		}
-	}
-	else if (main_status == false && el.first < plan.begin()->size() - 1 &&
-		basisChecker(plan[el.first][el.second + 1]))
-	{
-		const auto next = std::find(l.begin(), l.end(), std::make_pair(el.first, el.second + 1));
-		if (next == l.begin()) return true;
-		if (next == l.end())
-		{
-			copy.push_back(std::make_pair(el.first, el.second + 1));
-			main_status = lookVertical(copy, plan);
-		}
-	}
-	if (main_status && optional_status)
-	{
-		if (l.size() < optional.size())
-			std::swap(l, optional);
-	}
-	if (main_status) std::swap(l, copy);
-	return main_status;
+	return false;
 }
 
 std::list<std::pair<int, int>> TransportationProblem::findLoop(const std::pair<int, int> start, const Mat& plan)
@@ -254,7 +249,5 @@ std::list<std::pair<int, int>> TransportationProblem::findLoop(const std::pair<i
 	std::list<std::pair<int, int>> list {start};
 	if (lookHorizontal(list, plan) || lookVertical(list, plan))
 		return list;
-	/*if ()
-		return list;*/
 	throw std::logic_error("Can't find loop");
 }
