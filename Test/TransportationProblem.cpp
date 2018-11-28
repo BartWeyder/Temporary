@@ -91,7 +91,7 @@ TransportationProblem::Mat TransportationProblem::potentialMethod(const Mat & co
 void TransportationProblem::calcPotentialVertical(std::pair<size_t, size_t> current,
 	const Mat &costs, const Mat& plan, Vec &u, Vec &v, BMat &status)
 {
-	if (!status[current.first][current.second] && basisChecker(plan[current.first][current.second]))
+	if (!(status[current.first][current.second]) && basisChecker(plan[current.first][current.second]))
 	{
 		u[current.first] = costs[current.first][current.second] - v[current.second];
 		status[current.first][current.second] = true;
@@ -106,15 +106,15 @@ void TransportationProblem::calcPotentialVertical(std::pair<size_t, size_t> curr
 void TransportationProblem::calcPotentialHorizontal(std::pair<size_t, size_t> current,
 	const Mat &costs, const Mat& plan, Vec &u, Vec &v, BMat &status)
 {
-	if (!status[current.first][current.second] && basisChecker(plan[current.first][current.second]))
+	if (!(status[current.first][current.second]) && basisChecker(plan[current.first][current.second]))
 	{
 		v[current.second] = costs[current.first][current.second] - u[current.first];
 		status[current.first][current.second] = true;
 
 		if (current.first != u.size() - 1)
-			calcPotentialVertical({ current.first + 1, current.second }, plan, costs, u, v, status);
+			calcPotentialVertical({ current.first + 1, current.second }, costs, plan, u, v, status);
 		if (current.second != v.size() - 1)
-			calcPotentialHorizontal({ current.first, current.second + 1 }, plan, costs, u, v, status);
+			calcPotentialHorizontal({ current.first, current.second + 1 }, costs, plan, u, v, status);
 	}
 }
 
@@ -242,6 +242,37 @@ bool TransportationProblem::lookHorizontal(std::list<std::pair<int, int>>& l, co
 		++index;
 	}
 	return false;
+}
+
+void TransportationProblem::loopRedistribute(const std::list<std::pair<int, int>>& loop, Mat & plan)
+{
+	auto min = *(++loop.begin());
+	auto min_value = plan[min.first][min.second];
+	auto i = loop.begin();
+	for (std::advance(i, 3); i != loop.end(); ++i)
+	{
+		if(plan[i->first][i->second] < min_value)
+		{
+			min = *i;
+			min_value = plan[i->first][i->second];
+			++i;
+			if (i == loop.end())
+				break;
+		}
+	}
+	// add new value in start postition
+	i = loop.begin();
+	plan[i->first][i->second] = min_value;
+	// deleting min distribution from plan
+	plan[min.first][min.second] -= 1;
+	++i;
+	// add and subtract value
+	auto multiplier = -1;
+	for(; i!=loop.end(); ++i)
+	{
+		plan[i->first][i->second] += min_value * multiplier;
+		multiplier *= -1;
+	}
 }
 
 std::list<std::pair<int, int>> TransportationProblem::findLoop(const std::pair<int, int> start, const Mat& plan)
