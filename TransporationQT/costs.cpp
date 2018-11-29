@@ -4,11 +4,12 @@
 Costs::Costs(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    constexpr size_t COLS = 5;
-    constexpr size_t ROWS = 4;
-    std::vector<double> tmp(COLS);
-    for(size_t i = 0; i < ROWS; ++i)
-        costs_.push_back(tmp);
+//    constexpr size_t COLS = 5;
+//    constexpr size_t ROWS = 4;
+//    std::vector<double> tmp(COLS);
+//    for(size_t i = 0; i < ROWS; ++i)
+//        costs_.push_back(tmp);
+    costs_ = {{25, 28, 20, 15, 7}, {27, 5, 11, 23, 10}, {1, 25, 14, 16, 16}, {8, 6, 4, 16, 18}};
 }
 
 int Costs::rowCount(const QModelIndex &parent) const

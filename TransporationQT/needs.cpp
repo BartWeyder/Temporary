@@ -4,8 +4,9 @@
 Needs::Needs(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    constexpr size_t COLS = 5;
-    needs_.resize(COLS);
+//    constexpr size_t COLS = 5;
+//    needs_.resize(COLS);
+    needs_ = { 7,8,4,11,30 };
 }
 
 int Needs::rowCount(const QModelIndex &parent) const

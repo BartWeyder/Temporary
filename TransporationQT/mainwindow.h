@@ -5,6 +5,7 @@
 #include "costs.h"
 #include "needs.h"
 #include "production.h"
+#include "result.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,12 +22,14 @@ public:
 public slots:
     void setRows(const int &size);
     void setCols(const int &size);
+    void calculate();
 
 private:
     Ui::MainWindow *ui;
     Costs *costs;
     Needs *needs;
     Production *production;
+    Result *result;
 };
 
 #endif // MAINWINDOW_H

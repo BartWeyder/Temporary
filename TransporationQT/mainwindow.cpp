@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "TransportationProblem.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,9 +22,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->productionView->setModel(production);
     ui->productionView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    // init Result var
+    result = new Result();
+    ui->resultView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     //signals-slots
     connect(ui->colCount, SIGNAL(valueChanged(int)), this, SLOT(setCols(int)));
     connect(ui->rowCount, SIGNAL(valueChanged(int)), this, SLOT(setRows(int)));
+    connect(ui->calculateButton, SIGNAL(clicked(bool)), this, SLOT(calculate()));
 }
 
 MainWindow::~MainWindow()
@@ -43,4 +49,16 @@ void MainWindow::setCols(const int &size)
     needs->setSize(size);
 }
 
+void MainWindow::calculate()
+{
+    try {
+        result->result = TransportationProblem::potentialMethod(costs->costs(),
+                                                                production->production(), needs->needs());
+        ui->resultView->setModel(result);
+        ui->fValue->setText(QString("F = ") +
+                            QString::number(TransportationProblem::calcFunctionValue(costs->costs(), result->result)));
+    } catch (std::logic_error e) {
+        ui->fValue->setText(e.what());
+    }
 
+}

@@ -29,13 +29,17 @@ SOURCES += \
         mainwindow.cpp \
     costs.cpp \
     needs.cpp \
-    production.cpp
+    production.cpp \
+    TransportationProblem.cpp \
+    result.cpp
 
 HEADERS += \
         mainwindow.h \
     costs.h \
     needs.h \
-    production.h
+    production.h \
+    TransportationProblem.h \
+    result.h
 
 FORMS += \
         mainwindow.ui

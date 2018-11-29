@@ -4,8 +4,9 @@
 Production::Production(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    constexpr size_t ROWS = 4;
-    prod.resize(ROWS);
+//    constexpr size_t ROWS = 4;
+//    prod.resize(ROWS);
+    prod = { 16,12,14,18 };
 }
 
 int Production::rowCount(const QModelIndex &parent) const
