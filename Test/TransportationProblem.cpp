@@ -119,30 +119,28 @@ TransportationProblem::Mat TransportationProblem::potentialMethod(
 void TransportationProblem::calcPotentialVertical(std::pair<size_t, size_t> current,
 	const Mat &costs, const Mat& plan, Vec &u, Vec &v, BMat &status)
 {
-	if (!status[current.first][current.second] && basisChecker(plan[current.first][current.second]))
+	for (auto i = 0; i < plan.size(); ++i)
 	{
-		u[current.first] = costs[current.first][current.second] - v[current.second];
-		status[current.first][current.second] = true;
-
-		if (current.first != u.size() - 1)
-			calcPotentialVertical({ current.first + 1, current.second }, costs, plan, u, v, status);
-		if (current.second != v.size() - 1)
-			calcPotentialHorizontal({ current.first, current.second + 1 }, costs, plan, u, v, status);
+		if (basisChecker(plan[i][current.second]) && !status[i][current.second])
+		{
+			u[i] = costs[i][current.second] - v[current.second];
+			status[i][current.second] = true;
+			calcPotentialHorizontal({ i, current.second }, costs, plan, u, v, status);
+		}
 	}
 }
 
 void TransportationProblem::calcPotentialHorizontal(std::pair<size_t, size_t> current,
 	const Mat &costs, const Mat& plan, Vec &u, Vec &v, BMat &status)
 {
-	if (!status[current.first][current.second] && basisChecker(plan[current.first][current.second]))
+	for (auto j = 0; j < v.size(); ++j)
 	{
-		v[current.second] = costs[current.first][current.second] - u[current.first];
-		status[current.first][current.second] = true;
-
-		if (current.first != u.size() - 1)
-			calcPotentialVertical({ current.first + 1, current.second }, costs, plan, u, v, status);
-		if (current.second != v.size() - 1)
-			calcPotentialHorizontal({ current.first, current.second + 1 }, costs, plan, u, v, status);
+		if (basisChecker(plan[current.first][j]) && !status[current.first][j])
+		{
+			v[j] = costs[current.first][j] - u[current.first];
+			status[current.first][j] = true;
+			calcPotentialVertical({ current.first, j }, costs, plan, u, v, status);
+		}
 	}
 }
 
@@ -157,6 +155,17 @@ std::pair<TransportationProblem::Vec, TransportationProblem::Vec> Transportation
 	calcPotentialVertical({ 0,0 }, costs, plan, u, v, status);
 
 	return std::make_pair(u, v);
+}
+
+double TransportationProblem::calcFunctionValue(const Mat& costs, const Mat& plan)
+{
+	auto value = 0.0;
+	for (auto i = 0; i < plan.size(); ++i)
+		for (auto j = 0; j < plan.begin()->size(); ++j)
+			if (basisChecker(plan[i][j]))
+				value += plan[i][j] * costs[i][j];
+
+	return value;
 }
 
 std::pair<int, int> TransportationProblem::optimalCheck(const Mat & delta)
@@ -197,6 +206,7 @@ bool TransportationProblem::lookVertical(std::list<std::pair<int, int>>& l, cons
 					std::swap(l, copy);
 					return true;
 				}
+				copy.pop_back();
 			}
 		}
 		--index;
@@ -217,6 +227,7 @@ bool TransportationProblem::lookVertical(std::list<std::pair<int, int>>& l, cons
 					std::swap(l, copy);
 					return true;
 				}
+				copy.pop_back();
 			}
 		}
 		++index;
@@ -245,6 +256,7 @@ bool TransportationProblem::lookHorizontal(std::list<std::pair<int, int>>& l, co
 					std::swap(l, copy);
 					return true;
 				}
+				copy.pop_back();
 			}
 		}
 		--index;
@@ -265,6 +277,7 @@ bool TransportationProblem::lookHorizontal(std::list<std::pair<int, int>>& l, co
 					std::swap(l, copy);
 					return true;
 				}
+				copy.pop_back();
 			}
 		}
 		++index;
@@ -283,10 +296,10 @@ void TransportationProblem::loopRedistribute(const std::list<std::pair<int, int>
 		{
 			min = *i;
 			min_value = plan[i->first][i->second];
-			++i;
-			if (i == loop.end())
-				break;
 		}
+		++i;
+		if (i == loop.end())
+			break;
 	}
 	// add new value in start postition
 	i = loop.begin();
@@ -303,7 +316,8 @@ void TransportationProblem::loopRedistribute(const std::list<std::pair<int, int>
 	}
 }
 
-bool TransportationProblem::isDistributionCorrect(const Mat & result, const Vec & production, const Vec & needs)
+bool TransportationProblem::isDistributionCorrect(const Mat& result,
+                                                  const Vec& production, const Vec& needs)
 {
 	auto n_check = Vec(needs.size()), p_check = Vec(production.size());
 	for (auto i = 0; i < production.size(); ++i)

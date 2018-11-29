@@ -17,6 +17,7 @@ public:
 	static std::list<std::pair<int, int>> findLoop(std::pair<int, int> start, const Mat& plan);
 	// Return: pair of vectors: u(vertical) and v(horizontal)
 	static std::pair<Vec, Vec> calcPotentials(const Mat &costs, const Mat& plan);
+	static double calcFunctionValue(const Mat& costs, const Mat& plan);
 
 private:
 	static bool basisChecker(const double &v) { return v >= 0.0; }
