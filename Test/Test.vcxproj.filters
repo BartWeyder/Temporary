@@ -18,9 +18,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransportationP.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TransportationProblem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="metaprog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TransportationP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TransportationProblem.cpp">

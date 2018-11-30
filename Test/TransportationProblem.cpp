@@ -22,7 +22,6 @@ TransportationProblem::Mat TransportationProblem::northWest(ValVec production, V
 					std::distance(iterator->begin(), it));
 			++iterator;
 		}
-		throw std::logic_error("Error in finding nw");
 	};
 
 	// check statement later

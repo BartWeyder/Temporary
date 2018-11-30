@@ -155,7 +155,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TransportationP.h" />
     <ClInclude Include="TransportationProblem.h" />
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +170,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="TransportationP.cpp" />
     <ClCompile Include="TransportationProblem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

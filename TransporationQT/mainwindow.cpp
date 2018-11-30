@@ -35,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete costs;
+    delete needs;
+    delete production;
+    delete result;
 }
 
 void MainWindow::setRows(const int &size)
