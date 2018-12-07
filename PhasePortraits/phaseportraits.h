@@ -11,10 +11,13 @@ public:
     static std::pair<std::vector<double>, std::vector<double> > getPhaseCurveConst(
             double x_, double y_/*, double alphaX, double alphaY*/
             );
-//    static std::pair<std::vector<double>, std::vector<double>> getPhaseCurveNorm(
-//            double x_, double y_
-//            );
+    static std::pair<std::vector<double>, std::vector<double>> getPhaseCurveNorm(
+            double x_, double y_
+            );
 
+    static std::pair<std::vector<double>, std::vector<double>> getPhaseCurveTan(
+            double x_, double y_
+            );
 
     static constexpr size_t N = 10000;
     static constexpr double bound = 4;

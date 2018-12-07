@@ -23,7 +23,7 @@
    <widget class="QPushButton" name="setStartPointsButton">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>350</x>
       <y>20</y>
       <width>111</width>
       <height>41</height>
@@ -73,6 +73,50 @@
     </property>
     <property name="text">
      <string>Quantity:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>244</x>
+      <y>30</y>
+      <width>72</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="editable">
+     <bool>true</bool>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>Const</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Norm</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tan</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>30</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alpha Law Type</string>
     </property>
    </widget>
   </widget>
