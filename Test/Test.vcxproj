@@ -154,10 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TransportationProblem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="ConstIteratorImpl.cpp" />
     <ClCompile Include="errors.cpp" />
     <ClCompile Include="metaprog.cpp" />
