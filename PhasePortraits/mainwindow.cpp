@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    std::vector<double> v1{-4,-3.5,-3.4, -3.2,-2.8,-2.5,-2.2,-2,-1.8,-1.5,-1.2,-1,-0.5,1.0001,0.999,1,1};
+    std::vector<double> v2{4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0.0001, -0.0001};
+    auto p = std::make_pair(v1,v2);
+    draw(p);
 }
 
 MainWindow::~MainWindow()
@@ -18,25 +22,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::draw(std::pair<std::vector<double>, std::vector<double> > startPoints)
+void MainWindow::draw(std::pair<std::vector<double>, std::vector<double> >& startPoints)
 {
-    std::vector<std::future<std::list<std::pair<std::vector<double>, std::vector<double>>>>> v;
+    std::vector<std::future<std::list<std::pair<QVector<double>, QVector<double>>>>> v;
     v.reserve(THREADS);
     const size_t part_size = startPoints.first.size() / THREADS;
 
     auto start_x = startPoints.first.begin();
     auto end_x = start_x + part_size;
     auto start_y = startPoints.second.begin();
-    auto end_y = start_x + part_size;
+    //auto end_y = start_x + part_size;
 
     // pick function
-    std::function<std::pair<std::vector<double>, std::vector<double>>(double, double)> f_;
+    auto f_ = pp::getPhaseCurveConst;
 
     switch(ui->comboBox->currentIndex())
     {
-    case 0:
-        f_ = pp::getPhaseCurveConst;
-        break;
     case 1:
         f_ = pp::getPhaseCurveNorm;
         break;
@@ -53,21 +54,21 @@ void MainWindow::draw(std::pair<std::vector<double>, std::vector<double> > start
         for(size_t i = 0; i < part_size - 1; ++i)
         {
             v.push_back(std::async(std::launch::async, calcPoints,
-                std::vector<double>(start_x, end_x), std::vector<double>(start_y, end_y),
+                start_x, end_x, start_y,
                 f_));
             start_x += part_size;
             end_x += part_size;
             start_y += part_size;
-            end_y += part_size;
+            //end_y += part_size;
         }
 
     // give work for final thread
     v.push_back(std::async(std::launch::async, calcPoints,
-        std::vector<double>(start_x, startPoints.first.end()), std::vector<double>(start_y, startPoints.second.end()),
+        start_x, startPoints.first.end(), start_y,
         f_));
 
     // container to store curves objects, shared_ptr used for auto delete
-    std::list<std::shared_ptr<QCPCurve>> curves;
+
 
     QVector<double> t(pp::N);
     for(size_t i = 0; i < pp::N; ++i)
@@ -78,9 +79,9 @@ void MainWindow::draw(std::pair<std::vector<double>, std::vector<double> > start
         for (auto &point_set : points)
         {
             QCPCurve *curve = new QCPCurve(ui->widget->xAxis, ui->widget->yAxis);
-            curves.emplace_back(curve);
-            curve->setData(t, QVector<double>::fromStdVector(point_set.first),
-                                       QVector<double>::fromStdVector(point_set.second));
+            //curves.emplace_back(curve);
+            curve->setData(t, point_set.first,
+                                       point_set.second);
         }
     }
 
@@ -99,20 +100,23 @@ void MainWindow::on_setStartPointsButton_clicked()
     addCurveDialog.setModal(true);
     if(addCurveDialog.exec())
     {
+        ui->widget->clearPlottables();
         auto val = addCurveDialog.getValues();
         draw(val);
     }
 }
 
 // TODO: change logic
-std::list<std::pair<std::vector<double>, std::vector<double> > > MainWindow::calcPoints(
-        std::vector<double> x, std::vector<double> y,
-        std::function<std::pair<std::vector<double>, std::vector<double>>(double, double)> f)
+std::list<std::pair<QVector<double>, QVector<double> > > MainWindow::calcPoints(
+        std::vector<double>::iterator x_start, std::vector<double>::iterator x_end,
+        std::vector<double>::iterator y_start,
+        std::function<std::pair<QVector<double>, QVector<double>>(double, double)> f)
 {
-    std::list<std::pair<std::vector<double>, std::vector<double> > > list;
-    for(size_t i = 0; i < x.size(); ++i)
+    std::list<std::pair<QVector<double>, QVector<double> > > list;
+    for(; x_start != x_end; ++x_start)
     {
-        list.push_back(f(x[i], y[i]));
+        list.push_back(f(*x_start, *y_start));
+        ++y_start;
     }
     return list;
 }

@@ -8,19 +8,18 @@
 class PhasePortraits
 {
 public:
-    static std::pair<std::vector<double>, std::vector<double> > getPhaseCurveConst(
+    static std::pair<QVector<double>, QVector<double> > getPhaseCurveConst(
             double x_, double y_/*, double alphaX, double alphaY*/
             );
-    static std::pair<std::vector<double>, std::vector<double>> getPhaseCurveNorm(
+    static std::pair<QVector<double>, QVector<double>> getPhaseCurveNorm(
             double x_, double y_
             );
 
-    static std::pair<std::vector<double>, std::vector<double>> getPhaseCurveTan(
+    static std::pair<QVector<double>, QVector<double> > getPhaseCurveTan(
             double x_, double y_
             );
 
-    static constexpr size_t N = 10000;
-    static constexpr double bound = 4;
+    static constexpr size_t N = 100000;
 
 private:
     static double P(double x, double y) { return (x + y) * (x + y) - 1; }

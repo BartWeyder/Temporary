@@ -1,11 +1,11 @@
 #include "phaseportraits.h"
 
 
-std::pair<std::vector<double>, std::vector<double> > PhasePortraits::getPhaseCurveConst(
+std::pair<QVector<double>, QVector<double> > PhasePortraits::getPhaseCurveConst(
         double x_, double y_/*, double alphaX, double alphaY*/)
 {
     double alphaX = 0.001, alphaY = 0.001;
-    std::vector<double> x(1), y(1);
+    QVector<double> x(1), y(1);
     x.reserve(N);
     y.reserve(N);
     x[0] = x_;
@@ -17,19 +17,17 @@ std::pair<std::vector<double>, std::vector<double> > PhasePortraits::getPhaseCur
         x.push_back(x[i - 1] + alphaX * Vx_norm(Vx, Vy));
         y.push_back(y[i - 1] + alphaY * Vy_norm(Vx, Vy));
 
-//        if(x[i] <= -bound || y[i] <= -bound || x[i] >= bound || y[i] >= bound)
-//            break;
     }
     return std::make_pair(x, y);
 }
 
-std::pair<std::vector<double>, std::vector<double> > PhasePortraits::getPhaseCurveNorm(double x_, double y_)
+std::pair<QVector<double>, QVector<double> > PhasePortraits::getPhaseCurveNorm(double x_, double y_)
 {
     // start alpha value
-    double alpha = 0.01;
+    double alpha = 0.001;
     size_t i = 1;
     // getting first three points and than start loop
-    std::vector<double> x(1), y(1);
+    QVector<double> x(1), y(1);
     x.reserve(N);
     y.reserve(N);
     x[0] = x_;
@@ -55,13 +53,13 @@ std::pair<std::vector<double>, std::vector<double> > PhasePortraits::getPhaseCur
     return std::make_pair(x, y);
 }
 
-std::pair<std::vector<double>, std::vector<double> > PhasePortraits::getPhaseCurveTan(double x_, double y_)
+std::pair<QVector<double>, QVector<double> > PhasePortraits::getPhaseCurveTan(double x_, double y_)
 {
     // start alpha value
-    double alpha = 0.01;
+    double alpha = 0.001;
     size_t i = 1;
     // getting first three points and than start loop
-    std::vector<double> x(1), y(1);
+    QVector<double> x(1), y(1);
     x[0] = x_;
     y[0] = y_;
     x.reserve(N);

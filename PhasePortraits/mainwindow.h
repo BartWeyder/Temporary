@@ -5,6 +5,7 @@
 #include <future>
 #include <list>
 #include <functional>
+#include "qcustomplot.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void draw(std::pair<std::vector<double>, std::vector<double>> startPoints);
+    void draw(std::pair<std::vector<double>, std::vector<double> > &startPoints);
 
     static constexpr size_t THREADS = 4;
 
@@ -25,11 +26,12 @@ private slots:
     void on_setStartPointsButton_clicked();
 
 private:
-    static std::list<std::pair<std::vector<double>, std::vector<double>>> calcPoints(
-            std::vector<double> x, std::vector<double> y,
-            std::function<std::pair<std::vector<double>, std::vector<double>>(double, double)> f);
+    static std::list<std::pair<QVector<double>, QVector<double> > > calcPoints(
+            std::vector<double>::iterator x_start, std::vector<double>::iterator x_end,  std::vector<double>::iterator y_start,
+            std::function<std::pair<QVector<double>, QVector<double>>(double, double)> f);
 
     Ui::MainWindow *ui;
+    std::list<std::shared_ptr<QCPCurve>> curves;
 };
 
 #endif // MAINWINDOW_H
