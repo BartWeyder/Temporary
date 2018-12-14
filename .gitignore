@@ -271,6 +271,7 @@ build-TransporationQT-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/
 packages/
 x64/
 build-PhasePortraits-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/
+build-Fractals-Desktop_Qt_5_12_0_MinGW_64_bit-Debug/
 
 #exclude lib
 PhasePortraits/qcustomplot-source/
