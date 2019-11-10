@@ -27,7 +27,7 @@
     <ClInclude Include="SimpleID3Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataUtils.h">
+    <ClInclude Include="ID3Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="ID3Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataUtils.cpp">
+    <ClCompile Include="ID3Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

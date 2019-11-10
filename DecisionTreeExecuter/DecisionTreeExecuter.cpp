@@ -2,10 +2,13 @@
 //
 
 #include "pch.h"
+
 #include <iostream>
+#include <random>
+
 #include "rapidcsv.h"
 #include "ID3Node.h"
-#include "DataUtils.h"
+#include "ID3Utils.h"
 
 /// @brief Executable to run from console.
 /// @params
@@ -17,7 +20,7 @@ int main(int argc, char **argv)
    if (argc > 4) return -1;
 
    // Default values
-   constexpr auto standartTrainingDataLen = 15;
+   constexpr auto standartTrainingDataLen = 50;
    constexpr auto standartCSVFile = "MP-06-Kizim.csv";
    constexpr auto standartOutputFile = "TreeRecognitionResult.csv";
 
@@ -29,18 +32,31 @@ int main(int argc, char **argv)
    // Read file
    rapidcsv::Document doc(CSVFile, rapidcsv::LabelParams(-1, -1), rapidcsv::SeparatorParams(';'));
 
+   // Get data set by rows and shuffle data
+   Examples fullSetByRows(doc.GetRowCount());
+   for (size_t i = 0; i < doc.GetRowCount(); ++i)
+   {
+      fullSetByRows[i] = doc.GetRow<std::string>(i);
+   }
+   std::random_device rd;
+   std::mt19937 g(rd());
+   std::shuffle(fullSetByRows.begin(), fullSetByRows.end(), g);
+
    Examples fullSet(doc.GetColumnCount()); // Full data set
    Examples trainingExamples(doc.GetColumnCount()); // Only first n rows for training purposes
+   auto iterator = fullSetByRows.begin();
    for (size_t i = 0; i < trainingDataLen; ++i)
    {
-      InsertRow(trainingExamples, doc.GetRow<std::string>(i));
-      InsertRow(fullSet, doc.GetRow<std::string>(i));
+      ID3Utils::InsertRow(trainingExamples, *iterator);
+      ID3Utils::InsertRow(fullSet, *iterator);
+      ++iterator;
    }
    Examples checkExamples(doc.GetColumnCount()); // Rest rows after training one to test tree. 
    for (size_t i = trainingDataLen; i < doc.GetRowCount(); i++)
    {
-      InsertRow(checkExamples, doc.GetRow<std::string>(i));
-      InsertRow(fullSet, doc.GetRow<std::string>(i));
+      ID3Utils::InsertRow(checkExamples, *iterator);
+      ID3Utils::InsertRow(fullSet, *iterator);
+      ++iterator;
    }
 
    // Prepare attributes "header" list.
@@ -60,7 +76,7 @@ int main(int argc, char **argv)
 
    // Prepare output file
    std::ofstream file(outputFileName);
-   file << "Test Case,Expected,Algorithm Output" << std::endl;
+   file << "Expected,Algorithm Output" << std::endl;
    file.close();
    rapidcsv::Document output(outputFileName, rapidcsv::LabelParams(0, -1));
 
@@ -69,15 +85,15 @@ int main(int argc, char **argv)
 
    // Check our tree on test data set.
    auto rightCounter = 0;
-   for (size_t i = 0; i < checkExamples.begin()->size(); ++i)
+   for (size_t i = 0; i < fullSetByRows.size(); ++i)
    {
-      const auto actual = tree.GetValue(GetRow(checkExamples, i));
-      const auto expected = (*checkExamples.rbegin())[i];
+      const auto actual = tree.GetValue(fullSetByRows[i]);
+      const auto expected = *fullSetByRows[i].rbegin();
       std::cout << expected << " and should be " << actual << std::endl;
-      if (expected == actual) ++rightCounter;
-      output.SetRow(i, Row{ std::to_string(trainingDataLen + i), expected, actual });
+      if (expected == actual && i >= trainingDataLen) ++rightCounter;
+      output.SetRow(i, Row{ expected, actual });
    }
 
    output.Save();
-   std::cout << "Right classified: " << rightCounter << "/" << doc.GetRowCount() - trainingDataLen;
+   std::cout << "Right classified: " << rightCounter << "/" << fullSetByRows.size();
 }

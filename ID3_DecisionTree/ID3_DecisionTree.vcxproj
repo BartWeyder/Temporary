@@ -152,14 +152,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DataUtils.h" />
+    <ClInclude Include="ID3Utils.h" />
     <ClInclude Include="ID3Node.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SimpleID3Node.h" />
     <ClInclude Include="ValueHolder.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataUtils.cpp" />
+    <ClCompile Include="ID3Utils.cpp" />
     <ClCompile Include="ID3Node.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

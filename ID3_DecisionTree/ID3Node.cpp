@@ -5,7 +5,7 @@
 #include <exception>
 
 #include "SimpleID3Node.h"
-#include "DataUtils.h"
+#include "ID3Utils.h"
 
 namespace
 {
@@ -57,7 +57,7 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
       throw std::logic_error("There is only one possible class, nothing to define...");
    }
 
-   m_attribute = GetBestAttribute(i_examples, i_attributes);
+   m_attribute = ID3Utils::GetBestAttribute(i_examples, i_attributes);
    for (const auto& attr : m_uniqueAttributeValues->at(m_attribute))
    {
       Examples subsetOfExamples(i_examples.size());
@@ -65,7 +65,7 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
       {
          if (i_examples.at(m_attribute)[i] == attr)
          {
-            InsertRow(subsetOfExamples, GetRow(i_examples, i));
+            ID3Utils::InsertRow(subsetOfExamples, ID3Utils::GetRow(i_examples, i));
          }
       }
 
