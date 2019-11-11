@@ -72,7 +72,7 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
       // Check if subset is empty there are only single-class examples left:
       if (subsetOfExamples.empty())
       {
-         m_childNodes.insert({ attr, std::make_unique<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
+         m_childNodes.insert({ attr, std::make_shared<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
          continue;
       }
 
@@ -81,12 +81,12 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
 
       try
       {
-         m_childNodes.insert({ attr, std::make_unique<ID3Node>(subsetOfExamples, childAttributes,
+         m_childNodes.insert({ attr, std::make_shared<ID3Node>(subsetOfExamples, childAttributes,
             m_uniqueAttributeValues) });
       }
       catch (const std::logic_error&)
       {
-         m_childNodes.insert({ attr, std::make_unique<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
+         m_childNodes.insert({ attr, std::make_shared<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
       }
    }
 }
@@ -96,4 +96,15 @@ const std::string ID3Node::GetValue(const Example & i_experiment) const
 {
    const auto& attribute = i_experiment[m_attribute];
    return m_childNodes.at(attribute)->GetValue(i_experiment);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+size_t ID3Node::GetNodesCount() const
+{
+   auto size = m_childNodes.size();
+   for (const auto& child : m_childNodes)
+   {
+      size += child.second->GetNodesCount();
+   }
+   return size;
 }
