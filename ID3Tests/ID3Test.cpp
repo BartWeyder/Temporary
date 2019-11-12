@@ -2,15 +2,12 @@
 #include "CppUnitTest.h"
 #include "ID3Node.h"
 #include "ID3Utils.h"
-#include "SimpleID3Node.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace
 {
-   using ChildNodes = std::unordered_map<std::string, std::shared_ptr<ValueHolder>>;
-
-   /// @brief Returns tree from example 
+   /// @brief Returns tree from example
    /// @see https://miro.medium.com/max/661/0*DX1px-z340TgpXTN.png
    ID3Node getOracleTree()
    {
@@ -18,20 +15,20 @@ namespace
       //    Build "Sunny" branch, windy attribute:
       ChildNodes sunny
       {
-         {"False", std::make_shared<SimpleID3Node>("Yes")},
-         {"True", std::make_shared<SimpleID3Node>("No")}
+         {"False", "Yes"},
+         { "True", "No"}
       };
       //    Build "Rainy" brach, humidity attribute:
       ChildNodes rainy
       {
-         {"High", std::make_shared<SimpleID3Node>("No")},
-         {"Normal", std::make_shared<SimpleID3Node>("Yes")}
+         {"High", "No"},
+         {"Normal", "Yes"}
       };
       ChildNodes root
       {
-         {"Sunny", std::make_shared<ID3Node>(sunny, 3)},
-         {"Rainy", std::make_shared<ID3Node>(rainy, 2)},
-         {"Overcast", std::make_shared<SimpleID3Node>("Yes")}
+         {"Sunny", ID3Node(sunny, 3)},
+         {"Rainy", ID3Node(rainy, 2)},
+         {"Overcast", "Yes"}
       };
 
       return { root, 0 };
@@ -90,6 +87,19 @@ namespace ID3Tests
          Assert::AreEqual(oracleBestAttribute, bestAttribute);
       }
 
+      //TEST_METHOD(TestZeroGains)
+      //{
+      //   // INIT
+      //   const Examples examples{ {"True", "False"}, {"Class1", "Class2"} };
+
+      //   // ACT/ASSERT
+      //   auto f = [&examples]()
+      //   {
+      //      ID3Utils::GetBestAttribute(examples, { 0 });
+      //   };
+      //   Assert::ExpectException<std::logic_error>(f);
+      //}
+
       TEST_METHOD(CheckTestExample)
       {
          // INIT
@@ -97,7 +107,7 @@ namespace ID3Tests
          const auto oracle = getOracleTree();
 
          // ACT/ASSERT
-         Assert::AreEqual(oracle.GetNodesCount(), tree.GetNodesCount());
+         Assert::AreEqual(oracle.GetChildNodesCount(), tree.GetChildNodesCount());
          // next asserts will use examples with only parameters that tree shall use to determine class
          Example example{ "Sunny", "", "", "False" };
          Assert::IsTrue("Yes" == oracle.GetValue(example));
@@ -119,6 +129,5 @@ namespace ID3Tests
          Assert::IsTrue("Yes" == oracle.GetValue(example));
          Assert::IsTrue("Yes" == tree.GetValue(example));
       }
-
    };
 }

@@ -85,15 +85,18 @@ int main(int argc, char **argv)
 
    // Check our tree on test data set.
    auto rightCounter = 0;
+   auto testRight = 0;
    for (size_t i = 0; i < fullSetByRows.size(); ++i)
    {
       const auto actual = tree.GetValue(fullSetByRows[i]);
       const auto expected = *fullSetByRows[i].rbegin();
       std::cout << expected << " and should be " << actual << std::endl;
       if (expected == actual && i >= trainingDataLen) ++rightCounter;
+      else if (expected == actual && i < trainingDataLen) ++testRight;
       output.SetRow(i, Row{ expected, actual });
    }
 
    output.Save();
-   std::cout << "Right classified: " << rightCounter << "/" << fullSetByRows.size();
+   std::cout << "Right test cases classified: " << testRight << '/' << trainingDataLen << std::endl;
+   std::cout << "Right classified: " << rightCounter << '/' << fullSetByRows.size() - trainingDataLen;
 }

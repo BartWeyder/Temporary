@@ -59,9 +59,9 @@ namespace ID3Utils
 
       // Prepare data:
       // Get global (for result class) entropy:
-      UniqueValues uniqueClasses(i_examples.rbegin()->begin(), i_examples.rbegin()->end());
+      const auto uniqueClasses = std::make_unique<UniqueValues>(i_examples.rbegin()->begin(), i_examples.rbegin()->end());
       auto globalEntropy = 0.;
-      for (const auto& _class : uniqueClasses)
+      for (const auto& _class : *uniqueClasses)
       {
          globalEntropy += calculateEntropyAddition(
             std::count(i_examples.rbegin()->begin(), i_examples.rbegin()->end(), _class), i_examples.rbegin()->size());
@@ -111,13 +111,17 @@ namespace ID3Utils
    size_t GetBestAttribute(const Examples & i_examples, const Attributes & i_attributes)
    {
       const auto gains = GetGains(i_examples, i_attributes);
-      std::pair<size_t, double> bestAttribute{};
+      std::pair<size_t, double> bestAttribute{ *i_attributes.begin(), 0. };
       for (const auto& attrAndGain : gains)
       {
          if (attrAndGain.second > bestAttribute.second)
          {
             bestAttribute = attrAndGain;
          }
+      }
+      if (bestAttribute.second == 0)
+      {
+         throw std::logic_error("Gain is 0.");
       }
       return bestAttribute.first;
    }

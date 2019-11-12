@@ -4,7 +4,6 @@
 #include <numeric>
 #include <exception>
 
-#include "SimpleID3Node.h"
 #include "ID3Utils.h"
 
 namespace
@@ -33,6 +32,8 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
    UniqueAttributeValuesPtr i_uniqueAttributeValues)
    : m_uniqueAttributeValues(i_uniqueAttributeValues)
 {
+   static size_t counter = 0;
+   counter++;
    // Set unique attributes on root creation
    if (!m_uniqueAttributeValues)
    {
@@ -70,9 +71,9 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
       }
 
       // Check if subset is empty there are only single-class examples left:
-      if (subsetOfExamples.empty())
+      if (subsetOfExamples.begin()->empty())
       {
-         m_childNodes.insert({ attr, std::make_shared<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
+         m_childNodes.insert({ attr, findTheMostPopular(*i_examples.rbegin()) });
          continue;
       }
 
@@ -81,30 +82,39 @@ ID3Node::ID3Node(const Examples & i_examples, const Attributes & i_attributes,
 
       try
       {
-         m_childNodes.insert({ attr, std::make_shared<ID3Node>(subsetOfExamples, childAttributes,
-            m_uniqueAttributeValues) });
+         m_childNodes.insert({ attr, ID3Node(subsetOfExamples, childAttributes, m_uniqueAttributeValues) });
       }
       catch (const std::logic_error&)
       {
-         m_childNodes.insert({ attr, std::make_shared<SimpleID3Node>(findTheMostPopular(*i_examples.rbegin())) });
+         m_childNodes.insert({ attr, findTheMostPopular(*subsetOfExamples.rbegin()) });
       }
    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const std::string ID3Node::GetValue(const Example & i_experiment) const
+const std::string ID3Node::GetValue(const Example & i_inputAttributes) const
 {
-   const auto& attribute = i_experiment[m_attribute];
-   return m_childNodes.at(attribute)->GetValue(i_experiment);
+   const auto& attribute = i_inputAttributes[m_attribute];
+   if (const auto child = std::get_if<std::string>(&m_childNodes.at(attribute)))
+   {
+      return *child;
+   }
+   else
+   {
+      return std::get<ID3Node>(m_childNodes.at(attribute)).GetValue(i_inputAttributes);
+   }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-size_t ID3Node::GetNodesCount() const
+size_t ID3Node::GetChildNodesCount() const
 {
    auto size = m_childNodes.size();
-   for (const auto& child : m_childNodes)
+   for (const auto& childPair : m_childNodes)
    {
-      size += child.second->GetNodesCount();
+      if (const auto child = std::get_if<ID3Node>(&childPair.second))
+      {
+         size += child->GetChildNodesCount();
+      }
    }
    return size;
 }

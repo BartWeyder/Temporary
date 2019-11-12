@@ -21,12 +21,6 @@
     <ClInclude Include="ID3Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValueHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleID3Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ID3Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
