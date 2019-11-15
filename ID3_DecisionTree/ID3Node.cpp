@@ -1,3 +1,7 @@
+/// @file   ID3Node.cpp
+/// @author yevhenii@cqg.com
+/// @brief  Definition of ID3Node class.
+
 #include "pch.h"
 #include "ID3Node.h"
 

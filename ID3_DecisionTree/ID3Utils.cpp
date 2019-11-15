@@ -1,3 +1,7 @@
+/// @file   ID3Utils.cpp
+/// @author yevhenii@cqg.com
+/// @brief  ID3 algorithm utils definition.
+
 #include "pch.h"
 #include "ID3Utils.h"
 #include <algorithm>

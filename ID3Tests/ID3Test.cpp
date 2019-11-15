@@ -1,3 +1,7 @@
+/// @file   ID3Test.cpp
+/// @author yevhenii@cqg.com
+/// @brief  ID3 algorithm utils declaration.
+
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "ID3Node.h"

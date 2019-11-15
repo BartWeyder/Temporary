@@ -1,3 +1,7 @@
+/// @file   ID3Utils.h
+/// @author yevhenii@cqg.com
+/// @brief  ID3 algorithm utils declaration.
+
 #pragma once
 
 #include "ID3Node.h"

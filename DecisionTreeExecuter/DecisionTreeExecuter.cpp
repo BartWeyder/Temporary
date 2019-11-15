@@ -1,5 +1,7 @@
-// DecisionTreeExecuter.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/// @file   DecisionTreeExecuter.cpp
+/// @author yevhenii@cqg.com
+/// @brief  This file contains the 'main' function. Program execution begins and ends there.
+///         Used for external launch of ID3 algorithm.
 
 #include "pch.h"
 

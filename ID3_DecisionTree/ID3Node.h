@@ -1,3 +1,7 @@
+/// @file   ID3Node.h
+/// @author yevhenii@cqg.com
+/// @brief  Declaration of ID3Node class.
+
 #pragma once
 
 #include <set>
@@ -57,6 +61,6 @@ private:
    /// @brief Map of attribute-value and corresponding child node.
    ChildNodes m_childNodes;
 
-   /// Map of attribute index and set of its unique values.
+   /// @brief Map of attribute index and set of its unique values.
    UniqueAttributeValuesPtr m_uniqueAttributeValues;
 };
