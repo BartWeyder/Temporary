@@ -24,6 +24,9 @@
     <ClInclude Include="IdeallyConsistentMatrixFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExpertsEstimatesHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CompressedCompareMatrix.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IdeallyConsistentMatrixFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpertsEstimatesHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

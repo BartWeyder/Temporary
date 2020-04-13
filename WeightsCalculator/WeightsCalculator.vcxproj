@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ExpertsEstimatesHolder.h" />
     <ClInclude Include="IdeallyConsistentMatrixFactory.h" />
     <ClInclude Include="CompressedCompareMatrix.h" />
     <ClInclude Include="WeightsCalculator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExpertsEstimatesHolder.cpp" />
     <ClCompile Include="IdeallyConsistentMatrixFactory.cpp" />
     <ClCompile Include="CompressedCompareMatrix.cpp" />
     <ClCompile Include="WeightsCalculator.cpp" />
