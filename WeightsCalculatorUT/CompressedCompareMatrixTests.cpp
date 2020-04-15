@@ -18,21 +18,18 @@ namespace WeightsCalculatorUT
 		
       TEST_METHOD(TestFailedCreation)
       {
-         // INIT
-         std::initializer_list<double> initializerList = { 1,2,3,4,5,6,7 };
-         std::vector<Value> vec(initializerList);
-
          // ACT/ASSERT
-         Assert::ExpectException<std::out_of_range>(
-            [&initializerList]() {CCompressedCompareMatrix(4, initializerList); });
-         Assert::ExpectException<std::out_of_range>([&vec]() {CCompressedCompareMatrix(4, vec); });
+         Assert::ExpectException<std::logic_error>(
+            []() {CCompressedCompareMatrix({ 1, 2, 3, 4, 5, 6, 7 }); });
+         Assert::ExpectException<std::logic_error>(
+            []() {CCompressedCompareMatrix(std::vector<Value>{ 1, 2, 3, 4, 5, 6, 7 }); });
       }
 
 		TEST_METHOD(TestIsFull)
 		{
          // INIT
-         const CCompressedCompareMatrix fullMatrix(4, { 7., 6., 5., 6. / 7, 5. / 7, 5. / 6 });
-         const CCompressedCompareMatrix notFullMatrix(4, { 7, 0, 5, 6. / 7, 5. / 7, 5. / 6 });
+         const CCompressedCompareMatrix fullMatrix({ 7., 6., 5., 6. / 7, 5. / 7, 5. / 6 });
+         const CCompressedCompareMatrix notFullMatrix({ 7, 0, 5, 6. / 7, 5. / 7, 5. / 6 });
 
          // ACT/ASSERT
          Assert::IsTrue(fullMatrix.IsFull());
@@ -42,9 +39,9 @@ namespace WeightsCalculatorUT
       TEST_METHOD(TestIsConnected)
       {
          // INIT
-         const CCompressedCompareMatrix connectedMatrix(4, { 7, 6, 0, 0, 1, 0});
-         const CCompressedCompareMatrix notConnectedMatrix(4, { 7, 6, 0, 6./7, 0, 0});
-         const CCompressedCompareMatrix anotherConnectedMatrix(4, { 7, 0, 5, 0, 0, 0.5 });
+         const CCompressedCompareMatrix connectedMatrix({ 7, 6, 0, 0, 1, 0});
+         const CCompressedCompareMatrix notConnectedMatrix({ 7, 6, 0, 6./7, 0, 0});
+         const CCompressedCompareMatrix anotherConnectedMatrix({ 7, 0, 5, 0, 0, 0.5 });
 
          // ACT/ASSERT
          Assert::IsTrue(connectedMatrix.IsConnected());
@@ -55,7 +52,7 @@ namespace WeightsCalculatorUT
       TEST_METHOD(TestValueGet)
       {
          // INIT
-         const CCompressedCompareMatrix matrix(4, {7, 6, 5, 1. / 2, 1, 1. / 2});
+         const CCompressedCompareMatrix matrix({7, 6, 5, 1. / 2, 1, 1. / 2});
 
          // ACT/ASSERT
          Assert::AreEqual(6., matrix.Get(0, 2)); // upper triangle
@@ -66,7 +63,7 @@ namespace WeightsCalculatorUT
       TEST_METHOD(TestValueSet)
       {
          // INIT
-         CCompressedCompareMatrix matrix(4, { 7, 6, 5, 1. / 2, 1, 1. / 2 });
+         CCompressedCompareMatrix matrix({ 7, 6, 5, 1. / 2, 1, 1. / 2 });
 
          // ACT
          matrix.Set(0, 1, 0);

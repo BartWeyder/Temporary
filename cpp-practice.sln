@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WeightsCalculator", "Weight
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WeightsCalculatorUT", "WeightsCalculatorUT\WeightsCalculatorUT.vcxproj", "{A685C3F7-C64C-40ED-ADB8-A8856C5C9D6C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WeightsCalculatorSimpleUI", "WeightsCalculatorSimpleUI\WeightsCalculatorSimpleUI.vcxproj", "{74CE712B-DD36-4118-849C-1E462976B9F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -117,6 +119,14 @@ Global
 		{A685C3F7-C64C-40ED-ADB8-A8856C5C9D6C}.Release|x64.Build.0 = Release|x64
 		{A685C3F7-C64C-40ED-ADB8-A8856C5C9D6C}.Release|x86.ActiveCfg = Release|Win32
 		{A685C3F7-C64C-40ED-ADB8-A8856C5C9D6C}.Release|x86.Build.0 = Release|Win32
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Debug|x64.ActiveCfg = Debug|x64
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Debug|x64.Build.0 = Debug|x64
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Debug|x86.ActiveCfg = Debug|Win32
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Debug|x86.Build.0 = Debug|Win32
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Release|x64.ActiveCfg = Release|x64
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Release|x64.Build.0 = Release|x64
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Release|x86.ActiveCfg = Release|Win32
+		{74CE712B-DD36-4118-849C-1E462976B9F3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +142,7 @@ Global
 		{E7498517-6BA0-4D1F-B56F-EC1599D6C66A} = {AE0533B9-4081-41FA-8808-27DAB417B240}
 		{B5521541-ABEB-4AA3-9246-0EC2F4EA45B1} = {22E964D9-24F1-4333-A368-EBFE3BB8BFD2}
 		{A685C3F7-C64C-40ED-ADB8-A8856C5C9D6C} = {22E964D9-24F1-4333-A368-EBFE3BB8BFD2}
+		{74CE712B-DD36-4118-849C-1E462976B9F3} = {22E964D9-24F1-4333-A368-EBFE3BB8BFD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B2256C0-7EAF-48AD-96B5-BC13F4947B28}

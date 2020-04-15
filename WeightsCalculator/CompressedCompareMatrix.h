@@ -17,15 +17,14 @@ class CCompressedCompareMatrix
 {
 public:
    /// @brief The constructor.
-   /// @param i_dimension in, Number of alternatives.
    /// @param i_init in, Array with ordered values of upper triangle (e.g. {m01, m02, m12} for 3x3 matrix).
    /// @throw std::out_of_range exception if size of container is bigger that size of array.
+   /// @throw std::logic_error exception if init size is wrong.
    template <class Vector>
-   CCompressedCompareMatrix(const size_t i_dimension, Vector&& i_init)
+   explicit CCompressedCompareMatrix(Vector&& i_init)
       : m_orderedUpperPartValues(std::forward<Vector>(i_init))
-      , m_dimension(i_dimension)
+      , m_dimension(getDimension())
    {
-      if (i_init.size() > getStoredDataSize()) throw std::out_of_range("Holder size is less that arguments'");
    }
 
    /// @brief Constructor that initializes matrix with zeros.
@@ -35,10 +34,14 @@ public:
    {}
 
    /// @brief Container-dependent constructors.
-   /// @param i_dimension in, Number of alternatives.
    /// @param i_init in, Container from which we need to copy elements to our array.
    /// @throw std::out_of_range exception if size of container is bigger that size of array.
-   CCompressedCompareMatrix(size_t i_dimension, std::initializer_list<double>&& i_init);
+   /// @throw std::logic_error exception if init size 
+   explicit CCompressedCompareMatrix(std::initializer_list<double>&& i_init)
+      : m_orderedUpperPartValues(i_init)
+      , m_dimension(getDimension())
+   {
+   }
 
    /// @brief Copy constructor.
    CCompressedCompareMatrix(const CCompressedCompareMatrix& i_other) = default;
@@ -92,8 +95,11 @@ private:
    /// @brief Returns minimum number of required elements to fully reproduce whole PCM.
    [[nodiscard]] size_t getStoredDataSize() const { return m_dimension * (m_dimension - 1) / 2; }
 
+   /// @brief Calculates dimension by current stored value size.
+   [[nodiscard]] size_t getDimension() const;
+
    /// @brief Keeps ordered upper part values (e.g. {m01, m02, m12} for 3x3 matrix).
    std::vector<Value> m_orderedUpperPartValues;
 
-   size_t m_dimension; ///< Defines how many alternatives in out matrix.
+   size_t m_dimension = 0; ///< Defines how many alternatives are in our matrix.
 };

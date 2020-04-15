@@ -29,7 +29,7 @@ namespace WeightsCalculatorUT
       TEST_METHOD(TestInitialIdealPCM)
       {
          // INIT
-         const CCompressedCompareMatrix matrix(4, { 7, 6, 5, 1. / 2, 1, 1. / 2 });
+         const CCompressedCompareMatrix matrix({ 7, 6, 5, 1. / 2, 1, 1. / 2 });
          const std::vector<Value> initialRawDataOracle = { 7, 6, 5, 6 / 7.,5 / 7.,5 / 6. };
          const std::vector<Value> secondRawDataOracle = { 7, 6, 7, 6./7, 1, 7. / 6 };
 

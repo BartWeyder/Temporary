@@ -59,12 +59,10 @@ namespace
 
 ////////////////////////////////////////////////////////////////////////////////
 CIdeallyConsistentMatrixFactory::CIdeallyConsistentMatrixFactory(const CCompressedCompareMatrix& i_originalMatrix)
-   : m_originalMatrix(i_originalMatrix.Dimension())
+   : m_originalMatrix(i_originalMatrix)
    , m_currentCombination(i_originalMatrix.Dimension() - 1)
 {
    if (!i_originalMatrix.IsConnected()) throw std::logic_error("Cannot generate ideal PCM from not connected matrix.");
-
-   m_originalMatrix = i_originalMatrix;
 
    // init default combination
    const auto& originalData = m_originalMatrix.Data();
@@ -87,7 +85,7 @@ std::optional<CCompressedCompareMatrix> CIdeallyConsistentMatrixFactory::GetNext
    if (m_currentCombination.empty()) return std::nullopt;
 
    // fill missing values
-   CCompressedCompareMatrix idealMatrix(m_originalMatrix.Dimension(), getRawDataFromCombination());
+   CCompressedCompareMatrix idealMatrix(getRawDataFromCombination());
    for (size_t row = 0; row < idealMatrix.Dimension(); ++row)
    {
       for (auto column = row + 1; column < idealMatrix.Dimension(); ++column)
@@ -136,7 +134,7 @@ bool CIdeallyConsistentMatrixFactory::generateNewCombination()
          return false;
       }
 
-      validationMatrix = CCompressedCompareMatrix(m_originalMatrix.Dimension(), getRawDataFromCombination());
+      validationMatrix = CCompressedCompareMatrix(getRawDataFromCombination());
    }
    while (!validationMatrix.IsConnected());
 

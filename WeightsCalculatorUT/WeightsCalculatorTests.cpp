@@ -19,8 +19,8 @@ namespace
          [](const auto i_val1, const auto i_val2) { return std::abs(i_val1 - i_val2) < 0.00001; });
    }
 
-   const CCompressedCompareMatrix sc_matrix(4, { 7, 6, 5, 1. / 2, 1, 1. / 2 });
-   const CCompressedCompareMatrix sc_matrixWithEvenNumbers(4, { 8, 6, 4, 1. / 2, 2, 1. / 2 });
+   const CCompressedCompareMatrix sc_matrix({ 7, 6, 5, 1. / 2, 1, 1. / 2 });
+   const CCompressedCompareMatrix sc_matrixWithEvenNumbers({ 8, 6, 4, 1. / 2, 2, 1. / 2 });
 }
 
 namespace WeightsCalculatorUT
@@ -61,7 +61,7 @@ namespace WeightsCalculatorUT
       TEST_METHOD(NotFullMatrixTest)
       {
          // INIT
-         const CCompressedCompareMatrix matrix(4, { 7, 0, 0, 1. / 2, 0, 1. / 2 });
+         const CCompressedCompareMatrix matrix({ 7, 0, 0, 1. / 2, 0, 1. / 2 });
          const std::vector<Value> oracleWeights{ 0.5, 0.07143, 0.14286, 0.28571 };
 
          // ACT

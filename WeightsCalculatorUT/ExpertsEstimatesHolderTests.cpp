@@ -20,7 +20,7 @@ namespace
          [](const auto i_val1, const auto i_val2) { return std::abs(i_val1 - i_val2) < 0.00001; });
    }
 
-   const CCompressedCompareMatrix sc_matrix(4, { 7, 6, 5, 1. / 2, 1, 1. / 2 });
+   const CCompressedCompareMatrix sc_matrix({ 7, 6, 5, 1. / 2, 1, 1. / 2 });
 }
 
 namespace WeightsCalculatorUT
@@ -46,8 +46,8 @@ namespace WeightsCalculatorUT
       TEST_METHOD(TestMultipleExpertsBasedWeights)
       {
          // INIT
-         const CCompressedCompareMatrix matrixWithEvenNumbers(4, { 8, 6, 4, 1. / 2, 2, 1. / 2 });
-         const CCompressedCompareMatrix lazyExpertMatrix(4, { 7, 0, 0, 1. / 2, 0, 1. / 2 });
+         const CCompressedCompareMatrix matrixWithEvenNumbers({ 8, 6, 4, 1. / 2, 2, 1. / 2 });
+         const CCompressedCompareMatrix lazyExpertMatrix({ 7, 0, 0, 1. / 2, 0, 1. / 2 });
 
          CExpertsEstimatesHolder expertsEstimatesHolder;
          expertsEstimatesHolder.AddEstimate(sc_matrix, 0.4);

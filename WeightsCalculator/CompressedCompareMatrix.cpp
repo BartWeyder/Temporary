@@ -8,13 +8,6 @@
 #include <set>
 
 ////////////////////////////////////////////////////////////////////////////////
-CCompressedCompareMatrix::CCompressedCompareMatrix(const size_t i_dimension, std::initializer_list<double>&& i_init)
-   : m_orderedUpperPartValues(i_init)
-   , m_dimension(i_dimension)
-{
-   if (i_init.size() > getStoredDataSize()) throw std::out_of_range("Holder's size is less that arguments'");
-}
-
 CCompressedCompareMatrix& CCompressedCompareMatrix::operator=(CCompressedCompareMatrix&& i_other) noexcept
 {
    if (this != &i_other)
@@ -123,4 +116,16 @@ size_t CCompressedCompareMatrix::getCompressedIndex(const size_t i_row, const si
    // -1 because we use distance and not index relative to the matrix diagonal.
    // E.g. first element after diagonal will have column index==0 relative to the diagonal itself.
    return offset + distanceFromDiagonal - 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+size_t CCompressedCompareMatrix::getDimension() const
+{
+   const auto dimension = (1 + std::sqrt(1. + 4 * 2 * m_orderedUpperPartValues.size())) / 2.;
+   const size_t rounded = std::lround(dimension);
+   if (std::abs(dimension - rounded) > 1.e-7)
+   {
+      throw std::logic_error("Number of values is invalid: you need to pass exactly number of upper triangle values");
+   }
+   return rounded;
 }
