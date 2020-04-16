@@ -43,5 +43,6 @@ int main()
    const auto weights = estimates.CalculateMeanWeights(CWeightsCalculator::Comb);
    std::cout << "Weights: ";
    for (const auto weight : weights) std::cout << weight << " ";
-   std::cout << std::endl;
+   std::cout << std::endl << "Press any key to exit...";
+   std::cin.get();
 }
